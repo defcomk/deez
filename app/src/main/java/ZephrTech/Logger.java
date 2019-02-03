@@ -1,6 +1,7 @@
 package ZephrTech;
 
 import android.graphics.Rect;
+import android.hardware.camera2.CameraCharacteristics;
 import android.util.Log;
 
 public class Logger {
@@ -94,6 +95,32 @@ private static final String TAG ="LogME";
         else{ Log.d(TAG, "LogArrayString: Array Null");}
 
 
+    }
+
+    public static void LogEEPROM_WB(CameraCharacteristics ctor)
+    {
+
+        try {
+            int ILLUMNUM = ctor.get(CameraCharacteristics.LENS_POSE_REFERENCE);
+
+            float[] R = ctor.get(CameraCharacteristics.LENS_DISTORTION);
+
+            float[] G = ctor.get(CameraCharacteristics.LENS_DISTORTION);
+
+            float[] B = ctor.get(CameraCharacteristics.LENS_DISTORTION);
+
+
+            Log.v(TAG, "ILLUMINATS FOUND: " +ILLUMNUM);
+            for (int i = 0; i < R.length; i++) {
+                Log.v(TAG, "AWB RED: " + R[i]);
+                Log.v(TAG, "AWB Green: " + G[i]);
+                Log.v(TAG, "AWB BLUE: " + B[i]);
+            }
+        }
+        catch (Exception welp)
+        {
+            welp.getStackTrace();
+        }
     }
 
 
