@@ -44,10 +44,23 @@ public class ExtendoKeys {
     public static final int AEC_METERING_MODE_SPOT_METERING_ADV = 5;
     public static final int AEC_METERING_MODE_CENTER_WEIGHTED_ADV = 6;
 
+    public static final CaptureResult.Key<float[]> DYN_B;
+    public static final CaptureResult.Key<byte[]> PDAF;
+    public static final CaptureResult.Key<byte[]> AFD;
+    public static final CaptureResult.Key<double[]> PDLIB1;
+    public static final CaptureResult.Key<Integer[]> PDLIB2;
+
     static {
 		
 		// Example_KEY = getKeyClass("section.key",Type); so super res section = xiaomi.SuperResolution key = enabled type 0 = interger.class
 		//XIAOMI_SUPERRES = getKeyClass("xiaomi.SuperResolution.enabled",Integer.class);
+
+        DYN_B = getRSKeyClass("org.codeaurora.qcamera3.sensor_meta_data.dynamic_black_level_pattern",float[].class);
+        PDAF = getRSKeyClass("org.codeaurora.qcamera3.sensor_meta_data.sensor_pdaf_info",byte[].class);
+        AFD = getRSKeyClass("org.quic.camera.debugdata.DebugDataAF",byte[].class);
+
+        PDLIB1 = getRSKeyClass("com.sonystatic.stats.pdlib.PDLibTag1",double[].class);
+        PDLIB2 = getRSKeyClass("com.sonystatic.stats.pdlib.PDLibTag2",Integer[].class);
 		
         VIDEO_HDR = getKeyClass("org.codeaurora.qcamera3.video_hdr_mode.vhdr_mode",Integer.class);
         SHARPNESS = getKeyClass("org.codeaurora.qcamera3.sharpness.strength",Integer.class);
@@ -66,6 +79,23 @@ public class ExtendoKeys {
         try {
             Constructor<?>[] ctors = CaptureRequest.Key.class.getDeclaredConstructors();
             Constructor<CaptureRequest.Key> constructor = (Constructor<CaptureRequest.Key>) ctors[2];
+            constructor.setAccessible(true);
+            return constructor.newInstance(string,type);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static <T> CaptureResult.Key getRSKeyClass(String string, Class<T> type)
+    {
+        try {
+            Constructor<?>[] ctors = CaptureResult.Key.class.getDeclaredConstructors();
+            Constructor<CaptureResult.Key> constructor = (Constructor<CaptureResult.Key>) ctors[2];
             constructor.setAccessible(true);
             return constructor.newInstance(string,type);
         } catch (InstantiationException e) {

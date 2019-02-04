@@ -8,6 +8,8 @@ import android.util.Log;
 
 import org.codeaurora.qcamera3.ExtendoKeys;
 
+import ZephrTech.DynUtil;
+import ZephrTech.Google.Pissel3;
 import ZephrTech.Logger;
 import deeznutz.lol;
 
@@ -53,7 +55,20 @@ lol loco2 = lol.getInstance();
 
         Logger.LogArrayRect(Trekt);
 
+        Pissel3 pissel3 = new Pissel3();
+        logFloat(pissel3.NOISE_MODEL()[0]);
 
+
+       ExtendoKeys.DYN_B.getName();
+
+       logFloat(DynUtil.WB_B()[0]);
+
+       float[] a = DynUtil.WB_B();
+
+       ExtendoKeys.PDAF.getName();
+       byte[] q = new byte[]{(byte) 1,(byte)2,(byte)3,(byte)4,(byte)5};
+       
+       Logger.dumpByte(q);
 
     }
 

@@ -97,6 +97,14 @@ private static final String TAG ="LogME";
 
     }
 
+    public static void  dumpByte(byte[] pdaf)
+    {
+        for (byte b:pdaf)
+        {
+            Log.v(TAG,"-"+(int)b);
+        }
+    }
+
     public static void LogEEPROM_WB(CameraCharacteristics ctor)
     {
 
