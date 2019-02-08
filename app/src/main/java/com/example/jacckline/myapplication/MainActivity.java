@@ -67,7 +67,7 @@ lol loco2 = lol.getInstance();
 
        ExtendoKeys.PDAF.getName();
        byte[] q = new byte[]{(byte) 1,(byte)2,(byte)3,(byte)4,(byte)5};
-       
+
        Logger.dumpByte(q);
 
     }

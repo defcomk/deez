@@ -29,6 +29,8 @@ public class lol
     private static final float CROP_1_23 = 5.6f;
     private static final long S_2_NS = 1000000000;
 
+    private static int ISO_Out= 0;
+
     private static float ISO_to_Gain_Quant = 1.0f;
 
     public static void setApi2Exp(long api2Exp) {
@@ -56,6 +58,11 @@ public class lol
     public static float getISO_to_Gain_Quant()
     {
         return ISO_to_Gain_Quant;
+    }
+
+    public static float getSliderindex()
+    {
+        return isoVal;
     }
 
 
@@ -679,11 +686,26 @@ public class lol
         return getSLIDER()[0];
     }
 
-    public static Integer getISOTGT()
-    {
-        float a = getSLIDER()[1]/ISO_to_Gain_Quant;
-        return (int)a;
+    public static int getISO_Out() {
+        return ISO_Out;
     }
+
+    public static Integer getISOTGT()
+    {if(isoVal == 0)
+    {
+        ISO_Out = ISO_AE;
+        return ISO_Out;
+    }
+    else {
+
+        float a = getSLIDER()[1] / ISO_to_Gain_Quant;
+
+        ISO_Out = Math.round(a);
+
+        return ISO_Out;
+    }
+    }
+
 
     public static long[] getSLIDER()
     {
