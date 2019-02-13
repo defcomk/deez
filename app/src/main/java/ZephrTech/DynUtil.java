@@ -1,8 +1,12 @@
 package ZephrTech;
 
+import android.hardware.camera2.CaptureResult;
+import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.LensShadingMap;
+import android.hardware.camera2.params.TonemapCurve;
 import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,12 +21,16 @@ public class DynUtil {
     public static float frame_a_gain = 0;
     public static float frame_d_gain = 0;
 
+    static float[][] hol_up = (float[][])null;
+
     public static void a_gain (float in)
     {
         frame_a_gain = in * 100;
     }
 
     public static void d_gain (float in)
+
+
     {
         frame_d_gain = in * 100;
 
@@ -60,12 +68,15 @@ public class DynUtil {
 
     public static float[] getPseudoBL(float[] passthough)
     {
-        if(Build.DEVICE.equals("beryllium")||Build.DEVICE.equals("dipper")||Build.DEVICE.equals("persus"))
-        {
-            if (ISO()>=55&&ISO()<=104)
+        Log.v("deez bl"," ISO "+ISO());
+            if (ISO()>0&&ISO()<=50)
             {
                 return new float[]{63.75f,63.75f,64.0f,67.75f};
             }
+             else if (ISO()>51&&ISO()<=104)
+             {
+            return new float[]{63.75f,63.75f,64.0f,67.75f};
+             }
             else if (ISO()>=105&&ISO()<=154)
             {
                 return new float[]{63.75f,64f,64.0f,64f};
@@ -334,7 +345,10 @@ public class DynUtil {
             {
                 return new float[]{209.75f,384.75f,383.25f,213.75f};
             }
-            else {
+            else if(passthough[0]==63) {
+                return new float[]{63.75f,63.75f,64.0f,67.75f};
+            }
+            else  {
                 return passthough;
             }
 
@@ -344,9 +358,6 @@ public class DynUtil {
 
 
 
-        }
-        else
-            return passthough;
     }
 
     public static void dumpLSCtoFile(LensShadingMap lsc)
@@ -365,5 +376,41 @@ public class DynUtil {
         catch (Exception ex){
 
         }
+    }
+
+    public static void curveDeezNuts(TotalCaptureResult totalCaptureResult)
+    {
+        try {
+
+
+            if (totalCaptureResult != null) {
+                TonemapCurve tonemapCurve = (TonemapCurve) totalCaptureResult.get(CaptureResult.TONEMAP_CURVE);
+
+                if (tonemapCurve != null) {
+                    float[][] curve = new float[3][];
+                    hol_up = new float[3][];
+                    for (int i = 0; i <= 2; i++) {
+                        curve[i] = new float[2 * tonemapCurve.getPointCount(i)];
+
+                        Log.d("deez Curve", ": "+curve[i]);
+
+                        tonemapCurve.copyColorCurve(i, curve[i], 0);
+                    }
+                   
+
+                    hol_up = curve;
+
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    public static TonemapCurve staticCurve()
+    {
+        return new TonemapCurve(hol_up[0],hol_up[1],hol_up[2]);
     }
 }

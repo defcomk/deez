@@ -2,6 +2,7 @@ package com.example.jacckline.myapplication;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.hardware.camera2.params.LensShadingMap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,9 +62,16 @@ lol loco2 = lol.getInstance();
 
        ExtendoKeys.DYN_B.getName();
 
+
        logFloat(DynUtil.WB_B()[0]);
 
        float[] a = DynUtil.WB_B();
+
+      a = DynUtil.getPseudoBL(a);
+
+      Object aa=null;
+
+      DynUtil.dumpLSCtoFile((LensShadingMap) aa);
 
        ExtendoKeys.PDAF.getName();
        byte[] q = new byte[]{(byte) 1,(byte)2,(byte)3,(byte)4,(byte)5};
