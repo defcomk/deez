@@ -1,18 +1,26 @@
 package deeznutz;
 
+import android.util.Pair;
+
 public class NoiseMODELer {
 
     private static int NUM_COL_CHN = 4;
     private static double Noise_Profile_S = 0.0;
     private static double Noise_Profile_0 = 0.0;
 
+    public static int ISO()
+    {
+        //return Math.round(frame_a_gain*frame_d_gain);
+        return lol.getISO_Out();
+    }
+
     private static double[] noise_profile = new double[2*NUM_COL_CHN];
 
-    public static void GenerateModel(int Sen,String Dev)
+    public static void GenerateModel()
 
     {
-        Noise_Profile_S = computeNoiseModelS(Sen,Dev);
-        Noise_Profile_0 = computeNoiseModelO(Sen,Dev);
+        Noise_Profile_S = computeNoiseModelS(ISO(),"Walleye");
+        Noise_Profile_0 = computeNoiseModelO(ISO(),"Walleye");
 
         for(int i=0; i < 2*NUM_COL_CHN ; i +=2)
         {
@@ -20,6 +28,12 @@ public class NoiseMODELer {
             noise_profile[i+1] = Noise_Profile_S;
         }
     }
+
+   /* public static Pair[] nrm()
+    {
+        return new Pair[]{noise_profile,noise_profile};
+    }*/
+
 
     private static double computeNoiseModelS(int Sensitivity,String Device)
     {
@@ -30,7 +44,7 @@ public class NoiseMODELer {
 
     private static double computeNoiseModelO(int Sensitivity,String Device)
     {
-        double o = preComputedModels(Device)[1] * Sensitivity + preComputedModels(Device)[2];
+        double o = preComputedModels(Device)[2] * Sensitivity + preComputedModels(Device)[3];
 
         return o;
     }
