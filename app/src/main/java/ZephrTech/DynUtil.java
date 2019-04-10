@@ -1,5 +1,6 @@
 package ZephrTech;
 
+import android.app.Activity;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.LensShadingMap;
@@ -7,6 +8,7 @@ import android.hardware.camera2.params.TonemapCurve;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +22,10 @@ public class DynUtil {
 
     public static float frame_a_gain = 0;
     public static float frame_d_gain = 0;
+
+    public static View Seeker1 = null;
+
+    public static Activity locoTivity=null;
 
     static float[][] hol_up = (float[][])null;
 
@@ -71,11 +77,11 @@ public class DynUtil {
         Log.v("deez bl"," ISO "+ISO());
             if (ISO()>0&&ISO()<=50)
             {
-                return new float[]{63.75f,63.75f,64.0f,67.75f};
+                return new float[]{63.75f,63.75f,64.0f,64f};
             }
              else if (ISO()>51&&ISO()<=104)
              {
-            return new float[]{63.75f,63.75f,64.0f,67.75f};
+            return new float[]{63.75f,63.75f,64.0f,64f};
              }
             else if (ISO()>=105&&ISO()<=154)
             {
@@ -327,23 +333,27 @@ public class DynUtil {
             }
             else if (ISO()>=12620&&ISO()<=25239)
             {
-                return new float[]{67.25f,80,79.25f,67.5f};
+                return new float[]{67.5625f,83.0625f,82.125f,68.4375f};
             }
-            else if (ISO()>=25240&&ISO()<=50479)
+            else if (ISO()>=25240&&ISO()<=35199)
             {
-                return new float[]{85,122.75f,122.25f,86.25f};
+                return new float[]{87.8125f,127.375f,126.125f,87.3125f};
             }
-            else if (ISO()>=50480&&ISO()<=100960)
+            else if (ISO()>=35200&&ISO()<=50479)
             {
-                return new float[]{128.75f,220.25f,219.75f,131.5f};
+                return new float[]{98.125f,151.125f,149.9375f,99.9375f};
             }
-            else if (ISO()>=100961&&ISO()<=113777)
+            else if (ISO()>=50480&&ISO()<=70399)
             {
-                return new float[]{209.75f,384.75f,383.25f,213.75f};
+                return new float[]{136.625f,231.8125f,230.1875f,139f};
             }
-            else if (ISO()>=113778&&ISO()<=113777*2)
+            else if (ISO()>=70400&&ISO()<=93499) {
+                return new float[]{157.1875f, 281.4375f, 279.75f, 160.625f};
+            }
+
+            else if (ISO()>=93500&&ISO()<=113777*2)
             {
-                return new float[]{209.75f,384.75f,383.25f,213.75f};
+                return new float[]{196.8125f,349.625f,347.5f,200.75f};
             }
             else if(passthough[0]==63) {
                 return new float[]{63.75f,63.75f,64.0f,67.75f};
@@ -396,7 +406,7 @@ public class DynUtil {
 
                         tonemapCurve.copyColorCurve(i, curve[i], 0);
                     }
-                   
+
 
                     hol_up = curve;
 
@@ -413,4 +423,22 @@ public class DynUtil {
     {
         return new TonemapCurve(hol_up[0],hol_up[1],hol_up[2]);
     }
+
+
+    public static void setSeeker(View v)
+    {
+        Seeker1 = v;
+    }
+
+    public static void seekerHide(boolean b)
+    {
+        if (b)
+        {
+            Seeker1.setVisibility(View.GONE);
+        }
+        else {
+            Seeker1.setVisibility(View.VISIBLE);
+        }
+    }
+
 }
