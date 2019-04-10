@@ -2,6 +2,7 @@ package com.example.jacckline.myapplication;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.LensShadingMap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -82,6 +83,7 @@ lol loco2 = lol.getInstance();
 
     private void switchMAN()
     {
+        lol.essTEN_AG_CHECK(1f);
 
     }
 
@@ -91,17 +93,20 @@ lol loco2 = lol.getInstance();
     }
 
 
-    private void getFocus()
+    private void getFocus(TotalCaptureResult t)
     {
         if(loco2.getFocusMode()>0)
         {
             switchMAN();
         }
 
+
+        DynUtil.curveDeezNuts(t);
     }
 
     private void du()
     {
+
 
 
 
