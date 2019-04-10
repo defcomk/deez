@@ -769,13 +769,13 @@ public class lol
             case 4+16:
                 return new long[]{getShutter(4), getISO(1)};
             case 5+16:
-                return new long[]{getShutter(5), getISO(1)};
+                return new long[]{getShutter(1), getISO(1)};
             case 6+16:
-                return new long[]{getShutter(6), getISO(1)};
+                return new long[]{getShutter(2), getISO(1)};
             case 7+16:
-                return new long[]{getShutter(7), getISO(1)};
+                return new long[]{getShutter(3), getISO(1)};
             case 8+16:
-                return new long[]{getShutter(8), getISO(1)};
+                return new long[]{getShutter(4), getISO(1)};
             case 9+16:
                 return new long[]{getShutter(1), getISO(2)};
             case 10+16:
@@ -785,13 +785,13 @@ public class lol
             case 12+16:
                 return new long[]{getShutter(4), getISO(2)};
             case 13+16:
-                return new long[]{getShutter(5), getISO(2)};
+                return new long[]{getShutter(1), getISO(2)};
             case 14+16:
-                return new long[]{getShutter(6), getISO(2)};
+                return new long[]{getShutter(2), getISO(2)};
             case 15+16:
-                return new long[]{getShutter(7), getISO(2)};
+                return new long[]{getShutter(3), getISO(2)};
             case 16+16:
-                return new long[]{getShutter(8), getISO(2)};
+                return new long[]{getShutter(4), getISO(2)};
             case 17+16:
                 return new long[]{getShutter(1), getISO(3)};
             case 18+16:
@@ -801,13 +801,13 @@ public class lol
             case 20+16:
                 return new long[]{getShutter(4), getISO(3)};
             case 21+16:
-                return new long[]{getShutter(5), getISO(3)};
+                return new long[]{getShutter(1), getISO(3)};
             case 22+16:
-                return new long[]{getShutter(6), getISO(3)};
+                return new long[]{getShutter(2), getISO(3)};
             case 23+16:
-                return new long[]{getShutter(7), getISO(3)};
+                return new long[]{getShutter(3), getISO(3)};
             case 24+16:
-                return new long[]{getShutter(8), getISO(3)};
+                return new long[]{getShutter(4), getISO(3)};
             case 25+16:
                 return new long[]{getShutter(1), getISO(4)};
             case 26+16:
@@ -817,13 +817,13 @@ public class lol
             case 28+16:
                 return new long[]{getShutter(4), getISO(4)};
             case 29+16:
-                return new long[]{getShutter(5), getISO(4)};
+                return new long[]{getShutter(1), getISO(4)};
             case 30+16:
-                return new long[]{getShutter(6), getISO(4)};
+                return new long[]{getShutter(2), getISO(4)};
             case 31+16:
-                return new long[]{getShutter(7), getISO(4)};
+                return new long[]{getShutter(3), getISO(4)};
             case 32+16:
-                return new long[]{getShutter(8), getISO(4)};
+                return new long[]{getShutter(4), getISO(4)};
             case 33+16:
                 return new long[]{getShutter(1), getISO(5)};
             case 34+16:
@@ -833,13 +833,13 @@ public class lol
             case 36+16:
                 return new long[]{getShutter(4), getISO(5)};
             case 37+16:
-                return new long[]{getShutter(5), getISO(5)};
+                return new long[]{getShutter(1), getISO(5)};
             case 38+16:
-                return new long[]{getShutter(6), getISO(5)};
+                return new long[]{getShutter(2), getISO(5)};
             case 39+16:
-                return new long[]{getShutter(7), getISO(5)};
+                return new long[]{getShutter(3), getISO(5)};
             case 40+16:
-                return new long[]{getShutter(8), getISO(5)};
+                return new long[]{getShutter(4), getISO(5)};
             case 41+16:
                 return new long[]{getShutter(1), getISO(6)};
             case 42+16:
@@ -849,13 +849,13 @@ public class lol
             case 44+16:
                 return new long[]{getShutter(4), getISO(6)};
             case 45+16:
-                return new long[]{getShutter(5), getISO(6)};
+                return new long[]{getShutter(1), getISO(6)};
             case 46+16:
-                return new long[]{getShutter(6), getISO(6)};
+                return new long[]{getShutter(2), getISO(6)};
             case 47+16:
-                return new long[]{getShutter(7), getISO(6)};
+                return new long[]{getShutter(3), getISO(6)};
             case 48+16:
-                return new long[]{getShutter(8), getISO(6)};
+                return new long[]{getShutter(4), getISO(6)};
             case 49+16:
                 return new long[]{getShutter(1), getISO(7)};
             case 50+16:
@@ -865,13 +865,13 @@ public class lol
             case 52+16:
                 return new long[]{getShutter(4), getISO(7)};
             case 53+16:
-                return new long[]{getShutter(5), getISO(7)};
+                return new long[]{getShutter(1), getISO(7)};
             case 54+16:
-                return new long[]{getShutter(6), getISO(7)};
+                return new long[]{getShutter(2), getISO(7)};
             case 55+16:
-                return new long[]{getShutter(7), getISO(7)};
+                return new long[]{getShutter(3), getISO(7)};
             case 56+16:
-                return new long[]{getShutter(8), getISO(7)};
+                return new long[]{getShutter(4), getISO(7)};
             case 57+16:
                 return new long[]{getShutter(1), getISO(8)};
             case 58+16:
@@ -881,13 +881,13 @@ public class lol
             case 60+16:
                 return new long[]{getShutter(4), getISO(8)};
             case 61+16:
-                return new long[]{getShutter(5), getISO(8)};
+                return new long[]{getShutter(1), getISO(8)};
             case 62+16:
-                return new long[]{getShutter(6), getISO(8)};
+                return new long[]{getShutter(2), getISO(8)};
             case 63+16:
-                return new long[]{getShutter(7), getISO(8)};
+                return new long[]{getShutter(3), getISO(8)};
             case 64+16:
-                return new long[]{getShutter(8), getISO(8)};
+                return new long[]{getShutter(4), getISO(8)};
             case 65+16:
                 return new long[]{getShutter(1), getISO(9)};
             case 66+16:
@@ -897,13 +897,13 @@ public class lol
             case 68+16:
                 return new long[]{getShutter(4), getISO(9)};
             case 69+16:
-                return new long[]{getShutter(5), getISO(9)};
+                return new long[]{getShutter(1), getISO(9)};
             case 70+16:
-                return new long[]{getShutter(6), getISO(9)};
+                return new long[]{getShutter(2), getISO(9)};
             case 71+16:
-                return new long[]{getShutter(7), getISO(9)};
+                return new long[]{getShutter(3), getISO(9)};
             case 72+16:
-                return new long[]{getShutter(8), getISO(9)};
+                return new long[]{getShutter(4), getISO(9)};
             case 73+16:
                 return new long[]{getShutter(1), getISO(10)};
             case 74+16:
@@ -913,15 +913,41 @@ public class lol
             case 76+16:
                 return new long[]{getShutter(4), getISO(10)};
             case 77+16:
-                return new long[]{getShutter(5), getISO(10)};
+                return new long[]{getShutter(1), getISO(10)};
             case 78+16:
-                return new long[]{getShutter(6), getISO(10)};
+                return new long[]{getShutter(2), getISO(10)};
             case 79+16:
-                return new long[]{getShutter(7), getISO(10)};
+                return new long[]{getShutter(3), getISO(10)};
             case 80+16:
-                return new long[]{getShutter(8), getISO(10)};
-            case 81+16:
-                return new long[]{ISO_100(), getISO(1)};
+                return new long[]{getShutter(4), getISO(10)};
+
+
+                case 81+16:
+                return new long[]{getShutter(1), getISO(11)};
+            case 82+16:
+                return new long[]{getShutter(2), getISO(11)};
+            case 83+16:
+                return new long[]{getShutter(3), getISO(11)};
+            case 84+16:
+                return new long[]{getShutter(4), getISO(11)};
+
+            case 85+16:
+                return new long[]{getShutter(1), getISO(12)};
+            case 86+16:
+                return new long[]{getShutter(2), getISO(12)};
+            case 87+16:
+                return new long[]{getShutter(3), getISO(12)};
+            case 88+16:
+                return new long[]{getShutter(4), getISO(12)};
+
+            case 89+16:
+                return new long[]{getShutter(1), getISO(13)};
+            case 90+16:
+                return new long[]{getShutter(2), getISO(13)};
+            case 91+16:
+                return new long[]{getShutter(3), getISO(13)};
+            case 92+16:
+                return new long[]{getShutter(4), getISO(13)};
             default:
                 return new long[]{getShutter(8), getISO(1)};
         }
@@ -960,6 +986,15 @@ public class lol
                 return 16000;
             case 10:
                 return 25600;
+
+            case 11:
+                return 51200;
+
+            case 12:
+                return 102400;
+
+            case 13:
+                return 204800;
             default:
                 return 100;
         }
@@ -967,16 +1002,18 @@ public class lol
 
     public static String SlideVALUES(){
         return "AUTO,AE,100,200,400,800,1.6K,3.2K,6.4K,9.6K,12.8K,25.6K,32K,51.2K,64K,85K," +
-                "102K,1S100,2s100,4s100,8s100,10s100,16s100,M100,32s100," +
-                "1s200,2s200,4s200,8s200,10s200,16s200,M200,32s200," +
-                "1s400,2s400,4s400,8s400,10s400,16s400,M400,32s400," +
-                "1s800,2s800,4s800,8s800,10s800,16s800,M800,32s800," +
-                "1s1.6k,2s1.6k,4s1.6k,8s1.6k,10s1.6k,16s1.6k,M1.6k,32s1.6k," +
-                "1s3.2k,2s3.2k,4s3.2k,8s3.2k,10s3.2k,16s3.2k,M3.2k,32s3.2k," +
-                "1s6.4k,2s6.4k,4s6.4k,8s6.4k,10s6.4k,16s6.4k,M6.4k,32s6.4k," +
-                "1s12.8k,2s12.8k,4s12.8k,8s12.8k,10s12.8k,16s12.8k,M12.8k,32s12.8k," +
-                "1s16.0k,2s16.0k,4s16.0k,8s16.0k,10s16k,16s16.0k,M16.0k,32s16.0k," +
-                "1s25.6k,2s25.6k,4s25.6k,8s25.6k,10s25.6k,16s25.6k,M25.6k,32s25.6k,BIAS,MIN,TET";
+                "102K,1S100,2s100,4s100," +
+                "1s200,2s200,4s200," +
+                "1s400,2s400,4s400," +
+                "1s800,2s800,4s800," +
+                "1s1.6k,2s1.6k,4s1.6k," +
+                "1s3.2k,2s3.2k,4s3.2k," +
+                "1s6.4k,2s6.4k,4s6.4k," +
+                "1s12.8k,2s12.8k,4s12.8k," +
+                "1s16.0k,2s16.0k,4s16.0k," +
+                "1s51.2k,2s51.2k,4s51.2k," +
+                "1s102k,2s102k,4s102k," +
+                "1s204k,2s204k,4s204k";
     }
 
     private static long getShutter(int index)
