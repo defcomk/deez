@@ -728,15 +728,19 @@ public class lol
             case 1:
                 return new long[]{SYS_SHUTTER, SYS_ISO};
             case 2:
-                long div = Shutter_AE/SYS_SHUTTER;
-
-                return new long[]{Shutter_AE, SYS_ISO/div};
+                return new long[]{Shutter_AE*2, ISO_AE};
             case 3:
-                return new long[]{Shutter_AE, 200};
+                return new long[]{Shutter_AE/2, ISO_AE*2};
             case 4:
-                return new long[]{Shutter_AE, 400};
+                float ratio = SYS_ISO/50;
+
+                return new long[]{Math.round(Shutter_AE*ratio), 50};
             case 5:
-                return new long[]{Shutter_AE, 800};
+                float ratio2 = SYS_SHUTTER/Shutter_AE;
+
+                float ratio3 = SYS_ISO/ISO_AE;
+
+                return new long[]{Math.round(Shutter_AE*ratio2), Math.round(ISO_AE*ratio3)};
             case 6:
                 return new long[]{Shutter_AE, 1600};
             case 7:
@@ -921,7 +925,17 @@ public class lol
             case 80+16:
                 return new long[]{getShutter(8), getISO(10)};
             case 81+16:
-                return new long[]{ISO_100(), getISO(1)};
+                return new long[]{40*S_2_NS, getISO(1)};
+            case 82+16:
+                return new long[]{45*S_2_NS, getISO(1)};
+            case 83+16:
+                return new long[]{50*S_2_NS, getISO(1)};
+            case 84+16:
+                return new long[]{55*S_2_NS, getISO(1)};
+            case 85+16:
+                return new long[]{60*S_2_NS, getISO(1)};
+            case 86+16:
+                return new long[]{60*S_2_NS, 51200};
             default:
                 return new long[]{getShutter(8), getISO(1)};
         }
@@ -966,7 +980,7 @@ public class lol
     }
 
     public static String SlideVALUES(){
-        return "AUTO,AE,100,200,400,800,1.6K,3.2K,6.4K,9.6K,12.8K,25.6K,32K,51.2K,64K,85K," +
+        return "AUTO,sAE,gAE+EV1,FastgAE,mgsAE,sgRAT,1600,3200,6400,9600,12800,25600,32000,51200,64K,85K," +
                 "102K,1S100,2s100,4s100,8s100,10s100,16s100,M100,32s100," +
                 "1s200,2s200,4s200,8s200,10s200,16s200,M200,32s200," +
                 "1s400,2s400,4s400,8s400,10s400,16s400,M400,32s400," +
@@ -976,7 +990,7 @@ public class lol
                 "1s6.4k,2s6.4k,4s6.4k,8s6.4k,10s6.4k,16s6.4k,M6.4k,32s6.4k," +
                 "1s12.8k,2s12.8k,4s12.8k,8s12.8k,10s12.8k,16s12.8k,M12.8k,32s12.8k," +
                 "1s16.0k,2s16.0k,4s16.0k,8s16.0k,10s16k,16s16.0k,M16.0k,32s16.0k," +
-                "1s25.6k,2s25.6k,4s25.6k,8s25.6k,10s25.6k,16s25.6k,M25.6k,32s25.6k,BIAS,MIN,TET";
+                "1s25.6k,2s25.6k,4s25.6k,8s25.6k,10s25.6k,16s25.6k,M25.6k,32s25.6k,40s,45s,50s,55s,60s,SSBJKKX20";
     }
 
     private static long getShutter(int index)

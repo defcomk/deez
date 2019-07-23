@@ -14,15 +14,38 @@ public class NoiseMODELer {
         return lol.getISO_Out();
     }
 
-    public static double NR_S()
+
+    public static float NR_Scale()
     {
-        return computeNoiseModelS(ISO(),"IMX363_GOOGLE");
+        return (float) computeNoiseModelS(ISO(),"IMX363_GOOGLE");
     }
 
-    public static double NR_O()
+    public static float NR_Offset()
     {
-        return computeNoiseModelO(ISO(),"IMX363_GOOGLE");
+        return (float) computeNoiseModelO(ISO(),"IMX363_GOOGLE");
     }
+
+    public static float NR_Scale(String device)
+    {
+        return (float) computeNoiseModelS(ISO(),device);
+    }
+
+    public static float NR_Offset(String device)
+    {
+        return (float) computeNoiseModelO(ISO(),device);
+    }
+
+    public static float NR_Scale(String device,int iso)
+    {
+        return (float) computeNoiseModelS(iso,device);
+    }
+
+    public static float NR_Offset(String device,int iso)
+    {
+        return (float) computeNoiseModelO(iso,device);
+    }
+
+
 
     private static double[] noise_profile = new double[2*NUM_COL_CHN];
 
