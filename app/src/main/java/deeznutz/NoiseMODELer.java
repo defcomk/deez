@@ -14,6 +14,16 @@ public class NoiseMODELer {
         return lol.getISO_Out();
     }
 
+    public static double NR_S()
+    {
+        return computeNoiseModelS(ISO(),"IMX363_GOOGLE");
+    }
+
+    public static double NR_O()
+    {
+        return computeNoiseModelO(ISO(),"IMX363_GOOGLE");
+    }
+
     private static double[] noise_profile = new double[2*NUM_COL_CHN];
 
     public static void GenerateModel()
@@ -37,31 +47,51 @@ public class NoiseMODELer {
 
     private static double computeNoiseModelS(int Sensitivity,String Device)
     {
-        double s = preComputedModels(Device)[0] * Sensitivity + preComputedModels(Device)[1];
+        return  (preComputedModels(Device)[0] * Sensitivity) + preComputedModels(Device)[1];
 
-        return s;
     }
 
     private static double computeNoiseModelO(int Sensitivity,String Device)
     {
-        double o = preComputedModels(Device)[2] * Sensitivity + preComputedModels(Device)[3];
+        return (preComputedModels(Device)[2] * Sensitivity) + preComputedModels(Device)[3];
 
-        return o;
+
     }
     private static double[] preComputedModels(String Device)
     {
         switch (Device)
         {
-            case "BULLHEAD":
-                return new double[]{2.0,2.0,2.0,2.0};
-            case "MARLIN" :
-                return new double[]{2.0,2.0,2.0,2.0};
-            case "Walleye":
+            case "IMX362_GOOGLE":
                 return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
-            case "Crosshatch":
+            case "IMX363_GOOGLE":
+                return new double[]{0.0000025720647,0.000028855721,0.000000000039798506,0.000000046578279};
+
+            case "IMX378_GOOGLE":
                 return new double[]{2.0,2.0,2.0,2.0};
+            case "IMX355_GOOGLE" :
+                return new double[]{2.0,2.0,2.0,2.0};
+            case "OV4668_GOOGLE" :
+                return new double[]{2.0,2.0,2.0,2.0};
+            case "IMX179_GOOGLE" :
+                return new double[]{2.0,2.0,2.0,2.0};
+            case "OV5647_GOOGLE" :
+                return new double[]{2.0,2.0,2.0,2.0};
+            case "IMX363_MEME":
+                return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
+            case "IMX345_SAM":
+                return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
+            case "IMX363_ASUS":
+                return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
+            case "IMX586_MEME":
+                return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
+            case "IMX519_OP":
+                return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
+            case "IMX586_ASUS":
+                return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
+            case "IMX586_OP":
+                return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
             default:
-                return new double[]{2.0,2.0,2.0,2.0};
+                return new double[]{0,0,0,0};
         }
 
     }
