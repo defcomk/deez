@@ -1,5 +1,6 @@
 package deeznutz;
 
+import android.util.Log;
 import android.util.Pair;
 
 public class NoiseMODELer {
@@ -11,17 +12,21 @@ public class NoiseMODELer {
     public static int ISO()
     {
         //return Math.round(frame_a_gain*frame_d_gain);
-        return lol.getISO_Out();
+        return lol.getISOResult()*2;
     }
 
 
     public static float NR_Scale()
     {
+        Log.d("Deez Noise Modeler ISO",""+ISO()+ "Scale"+ computeNoiseModelS(ISO(),"IMX363_GOOGLE"));
+
+
         return (float) computeNoiseModelS(ISO(),"IMX363_GOOGLE");
     }
 
     public static float NR_Offset()
     {
+        Log.d("Deez Noise Modeler ISO",""+ISO()+ "Scale"+ computeNoiseModelO(ISO(),"IMX363_GOOGLE"));
         return (float) computeNoiseModelO(ISO(),"IMX363_GOOGLE");
     }
 
@@ -106,13 +111,13 @@ public class NoiseMODELer {
             case "IMX363_ASUS":
                 return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
             case "IMX586_MEME":
-                return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
+                return new double[]{5.015589e-007,4.117037e-006,1.441289e-102,1.894463e-007};
             case "IMX519_OP":
                 return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
             case "IMX586_ASUS":
                 return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
             case "IMX586_OP":
-                return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
+                return new double[]{5.694684e-007,9.380359e-006,1.187943e-012,1.150711e-007};
             default:
                 return new double[]{0,0,0,0};
         }

@@ -27,6 +27,8 @@ public class DynUtil {
 
     public static Activity locoTivity=null;
 
+    public static boolean BL_LOCKED = false;
+
     static float[][] hol_up = (float[][])null;
 
     public static void a_gain (float in)
@@ -45,13 +47,35 @@ public class DynUtil {
     private static int ISO()
     {
         //return Math.round(frame_a_gain*frame_d_gain);
-        return lol.getISO_Out();
+        return lol.getISOResult()*4;
     }
 
 
     public static Integer NUM()
     {
         return 5;
+    }
+
+
+    public static float[] CEPHEUS_CT1(float[]passaux)
+    {
+        if(lol.getFACING() == 0) {
+            return new float[]{1.109375f,-0.5234375f, -0.171875f, -0.96875f, 1.875f, 0.0390625f, 0.046875f, -0.171875f, 0.8984375f};
+        }
+        else {
+            return passaux;
+        }
+
+    }
+
+    public static float[] CEPHEUS_CT2(float[]passaux)
+    {
+        if(lol.getFACING() == 0) {
+            return new float[]{1.4375f, -0.6796875f, -0.21875f, -0.96875f,1.875f, 0.0390625f, 0.0390625f, -0.140625f, 0.734375f};
+        }
+        else {
+            return passaux;
+        }
     }
 
     public static float[] WB_R()
@@ -70,6 +94,332 @@ public class DynUtil {
     {
         return new float[]{0.70312500f,0.53808594f,0.35156250f,0f,0f};
 
+    }
+
+    public static float[] Linearization(float[] passthough) {
+        if(lol.getFACING() == 1)
+        {
+            int i = 0;
+            float[] Ye = Linearization_ov13855(passthough);
+            for (float x:Ye
+                 ) {
+                i++;
+
+                Log.d("Deez BL OV","["+i+"] "+x);
+
+            }
+            BL_LOCKED = true;
+            return Ye;
+
+
+
+        }
+        else {
+            int i = 0;
+            float[] Ye = Linearization_586(passthough);
+            for (float x:Ye
+                    ) {
+                i++;
+
+                Log.d("Deez BL IMX","["+i+"] "+x);
+
+            }
+            BL_LOCKED = true;
+            return Ye;
+        }
+    }
+
+    private static int ISOASUS()
+    {
+        //return Math.round(frame_a_gain*frame_d_gain);
+        return lol.getISO_Out()/4;
+    }
+
+    public static float[] Linearization_586(float[] passthough) {
+
+        Log.d("Deez BL IMX","ISO]"+ISO());
+        int X = 16;
+        if (ISO() > 1 && ISO() <= 101) {
+            return new float[]{1008 / X, 1004 / X, 1004 / X, 1008 / X};
+        }
+        else if(ISO() >101 && ISO() <= 201)
+        {
+            return new float[]{1008/X,1004/X,1004/X,1008/X};
+        }
+        else if(ISO() >201 && ISO() <= 401)
+        {
+            return new float[]{1004/X,1000/X,1000/X,1004/X};
+        }
+        else if(ISO() >401 && ISO() <= 801)
+        {
+            return new float[]{998/X,990/X,990/X,998/X};
+        }
+        else if(ISO() >801 && ISO() <= 1601)
+        {
+            return new float[]{972/X,972/X,973/X,973/X};
+        }
+        else if(ISO() >1601 && ISO() <= 3201)
+        {
+            return new float[]{939/X,935/X,934/X,938/X};
+        }
+        else if(ISO() >3201 && ISO() <= 6401)
+        {
+            return new float[]{851/X,851/X,850/X,850/X};
+        }
+        else if(ISO() >6401 && ISO() <= 13800)
+        {
+            return new float[]{685/X,777/X,777/X,680/X};
+        }
+        else
+        {
+            return passthough;
+        }
+    }
+
+    public static float[] Linearization_ov13855(float[] passthough) {
+        Log.d("Deez BL OV","ISO]"+ISO());
+        int X = 16;
+        if (ISO() > 1 && ISO() <= 101) {
+            return new float[]{58,62,62,58};
+        }
+        else if(ISO() >101 && ISO() <= 201)
+        {
+            return new float[]{64,64,64,64};
+        }
+        else if(ISO() >201 && ISO() <= 401)
+        {
+            return new float[]{64,64,64,64};
+        }
+        else if(ISO() >401 && ISO() <= 801)
+        {
+            return new float[]{60,64,64,60};
+        }
+        else if(ISO() >801 && ISO() <= 1601)
+        {
+            return new float[]{72,72,72,72};
+        }
+        else if(ISO() >1601 && ISO() <= 3201)
+        {
+            return new float[]{72,88,88,72};
+        }
+        else if(ISO() >3201 && ISO() <= 12801)
+        {
+            return new float[]{80,88,88,80};
+        }
+        else
+        {
+            return passthough;
+        }
+    }
+
+    public static float[] getZF6_BL_586(float[] passthough)
+    {
+        int X = 16;
+        if (ISOASUS()>1 && ISOASUS() <= 25)
+        {
+            return new float[]{1083/X,1116/X,1117/X,1079/X};
+        }
+        else if(ISOASUS() >25 && ISOASUS() <= 75)
+        {
+            return new float[]{1083/X,1112/X,1113/X,1075/X};
+        }
+        else if(ISOASUS() > 75 && ISOASUS() <= 125)
+        {
+            return new float[]{1081/X,1114/X,1114/X,1077/X};
+        }
+        else if(ISOASUS() > 125 && ISOASUS() <= 175)
+        {
+            return new float[]{1073/X,1105/X,1105/X,1068/X};
+        }
+        else if(ISOASUS() > 175 && ISOASUS() <= 225)
+        {
+            return new float[]{1079/X,1105/X,1105/X,1069/X};
+        }
+        else if(ISOASUS() > 225 && ISOASUS() <= 275)
+        {
+            return new float[]{1073/X,1105/X,1106/X,1069/X};
+        }
+        else if(ISOASUS() > 275 && ISOASUS() <= 325)
+        {
+            return new float[]{1075/X,1107/X,1108/X,1072/X};
+        }
+        else if(ISOASUS() > 325 && ISOASUS() <= 375)
+        {
+            return new float[]{1061/X,1091/X,1092/X,1058/X};
+        }
+        else if(ISOASUS() > 375 && ISOASUS() <= 425)
+        {
+            return new float[]{1061/X,1091/X,1091/X,1057/X};
+        }
+        else if(ISOASUS() > 425 && ISOASUS() <= 475)
+        {
+            return new float[]{1062/X,1091/X,1092/X,1058/X};
+        }
+        else if(ISOASUS() > 475 && ISOASUS() <= 525)
+        {
+            return new float[]{1062/X,1091/X,1091/X,1057/X};
+        }
+        else if(ISOASUS() > 525 && ISOASUS() <= 575)
+        {
+            return new float[]{1062/X,1091/X,1092/X,1058/X};
+        }
+        else if(ISOASUS() > 575 && ISOASUS() <= 625)
+        {
+            return new float[]{1062/X,1093/X,1093/X,1059/X};
+        }
+        else if(ISOASUS() > 625 && ISOASUS() <= 675)
+        {
+            return new float[]{1060/X,1091/X,1091/X,1058/X};
+        }
+        else if(ISOASUS() > 675 && ISOASUS() <= 725)
+        {
+            return new float[]{1062/X,1091/X,1092/X,1058/X};
+        }
+        else if(ISOASUS() > 725 && ISOASUS() <= 775)
+        {
+            return new float[]{1062/X,1091/X,1092/X,1059/X};
+        }
+        else if(ISOASUS() > 775 && ISOASUS() <= 825)
+        {
+            return new float[]{1059/X,1088/X,1088/X,1054/X};
+        }
+        else if(ISOASUS() > 825 && ISOASUS() <= 875)
+        {
+            return new float[]{1060/X,1090/X,1091/X,1056/X};
+        }
+        else if(ISOASUS() > 875 && ISOASUS() <= 925)
+        {
+            return new float[]{1063/X,1093/X,1094/X,1058/X};
+        }
+        else if(ISOASUS() > 925 && ISOASUS() <= 975)
+        {
+            return new float[]{1064/X,1094/X,1095/X,1059/X};
+        }
+        else if(ISOASUS() > 975 && ISOASUS() <= 1025)
+        {
+            return new float[]{1063/X,1094/X,1094/X,1058/X};
+        }
+        else if(ISOASUS() > 1025 && ISOASUS() <= 1625)
+        {
+            return new float[]{1065/X,1096/X,1097/X,1061/X};
+        }
+        else if(ISOASUS() > 1625 && ISOASUS() <= 2025)
+        {
+            return new float[]{1065/X,1095/X,1095/X,1061/X};
+        }
+        else if(ISOASUS() > 2025 && ISOASUS() <= 6440)
+        {
+            return new float[]{1064/X,1094/X,1094/X,1058/X};
+        }
+        else
+        {
+            return passthough;
+        }
+    }
+
+    public static float[] getZF6_BL_OV13855(float[] passthough)
+    {
+        int X = 16;
+        if (ISOASUS()>1 && ISOASUS() <= 25)
+        {
+            return new float[]{1083/X,1116/X,1117/X,1079/X};
+        }
+        else if(ISOASUS() >25 && ISOASUS() <= 75)
+        {
+            return new float[]{1083/X,1112/X,1113/X,1075/X};
+        }
+        else if(ISOASUS() > 75 && ISOASUS() <= 125)
+        {
+            return new float[]{1081/X,1114/X,1114/X,1077/X};
+        }
+        else if(ISOASUS() > 125 && ISOASUS() <= 175)
+        {
+            return new float[]{1073/X,1105/X,1105/X,1068/X};
+        }
+        else if(ISOASUS() > 175 && ISOASUS() <= 225)
+        {
+            return new float[]{1079/X,1105/X,1105/X,1069/X};
+        }
+        else if(ISOASUS() > 225 && ISOASUS() <= 275)
+        {
+            return new float[]{1073/X,1105/X,1106/X,1069/X};
+        }
+        else if(ISOASUS() > 275 && ISOASUS() <= 325)
+        {
+            return new float[]{1075/X,1107/X,1108/X,1072/X};
+        }
+        else if(ISOASUS() > 325 && ISOASUS() <= 375)
+        {
+            return new float[]{1061/X,1091/X,1092/X,1058/X};
+        }
+        else if(ISOASUS() > 375 && ISOASUS() <= 425)
+        {
+            return new float[]{1061/X,1091/X,1091/X,1057/X};
+        }
+        else if(ISOASUS() > 425 && ISOASUS() <= 475)
+        {
+            return new float[]{1062/X,1091/X,1092/X,1058/X};
+        }
+        else if(ISOASUS() > 475 && ISOASUS() <= 525)
+        {
+            return new float[]{1062/X,1091/X,1091/X,1057/X};
+        }
+        else if(ISOASUS() > 525 && ISOASUS() <= 575)
+        {
+            return new float[]{1062/X,1091/X,1092/X,1058/X};
+        }
+        else if(ISOASUS() > 575 && ISOASUS() <= 625)
+        {
+            return new float[]{1062/X,1093/X,1093/X,1059/X};
+        }
+        else if(ISOASUS() > 625 && ISOASUS() <= 675)
+        {
+            return new float[]{1060/X,1091/X,1091/X,1058/X};
+        }
+        else if(ISOASUS() > 675 && ISOASUS() <= 725)
+        {
+            return new float[]{1062/X,1091/X,1092/X,1058/X};
+        }
+        else if(ISOASUS() > 725 && ISOASUS() <= 775)
+        {
+            return new float[]{1062/X,1091/X,1092/X,1059/X};
+        }
+        else if(ISOASUS() > 775 && ISOASUS() <= 825)
+        {
+            return new float[]{1059/X,1088/X,1088/X,1054/X};
+        }
+        else if(ISOASUS() > 825 && ISOASUS() <= 875)
+        {
+            return new float[]{1060/X,1090/X,1091/X,1056/X};
+        }
+        else if(ISOASUS() > 875 && ISOASUS() <= 925)
+        {
+            return new float[]{1063/X,1093/X,1094/X,1058/X};
+        }
+        else if(ISOASUS() > 925 && ISOASUS() <= 975)
+        {
+            return new float[]{1064/X,1094/X,1095/X,1059/X};
+        }
+        else if(ISOASUS() > 975 && ISOASUS() <= 1025)
+        {
+            return new float[]{1063/X,1094/X,1094/X,1058/X};
+        }
+        else if(ISOASUS() > 1025 && ISOASUS() <= 1625)
+        {
+            return new float[]{1065/X,1096/X,1097/X,1061/X};
+        }
+        else if(ISOASUS() > 1625 && ISOASUS() <= 2025)
+        {
+            return new float[]{1065/X,1095/X,1095/X,1061/X};
+        }
+        else if(ISOASUS() > 2025 && ISOASUS() <= 6440)
+        {
+            return new float[]{1064/X,1094/X,1094/X,1058/X};
+        }
+        else
+        {
+            return passthough;
+        }
     }
 
     public static float[] getPseudoBL(float[] passthough)

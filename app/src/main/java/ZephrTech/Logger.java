@@ -131,5 +131,18 @@ private static final String TAG ="LogME";
         }
     }
 
+    public static void JIREN()
+    {
+        try {
+            Log.d("Deez"," Caller"+Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println("Deez Caller"+Thread.currentThread().getStackTrace()[2].getMethodName());
+
+        }catch (Exception e)
+        {
+
+        }
+
+    }
+
 
 }

@@ -10,9 +10,11 @@ import android.util.Log;
 
 import org.codeaurora.qcamera3.ExtendoKeys;
 
+import ZephrTech.Asus.Zenfone6;
 import ZephrTech.DynUtil;
 import ZephrTech.Google.Pissel3;
 import ZephrTech.Logger;
+import ZephrTech.MoDevice;
 import deeznutz.lol;
 
 public class MainActivity extends AppCompatActivity {
@@ -83,7 +85,14 @@ lol loco2 = lol.getInstance();
 
     private void switchMAN()
     {
-        lol.essTEN_AG_CHECK(1f);
+
+        Logger.JIREN();
+
+        if(DynUtil.BL_LOCKED)
+        {
+            lol.essTEN_AG_CHECK(1f);
+
+        }
 
     }
 

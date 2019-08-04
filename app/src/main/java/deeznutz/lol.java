@@ -35,6 +35,13 @@ public class lol
 
     private static int ISO_Out= 0;
 
+    private static int ASUSISODIV= 4;
+
+
+    private static int FACING;
+
+    private static int ISO_RESULT;
+
     private static float ISO_to_Gain_Quant = 1.0f;
 
     public static void setApi2Exp(long api2Exp) {
@@ -693,8 +700,48 @@ public class lol
         return getSLIDER()[0];
     }
 
+    public static void setFACING(int face)
+    {
+        Log.d("Deez Lens Facings",String.valueOf(face));
+        FACING = face;
+    }
+
+    public static void setISOResult(Integer face)
+    {
+        Log.d("Deez Lens Facings",String.valueOf(face));
+        ISO_RESULT = face;
+    }
+
+    public static int getISOResult()
+    {
+        return ISO_RESULT;
+    }
+
+    public static int getFACING()
+    {
+        return FACING;
+    }
+
+
+
     public static int getISO_Out() {
+
+         return ISO_Out*4;
+
+    }
+
+    public static Integer getISOTGTzF6()
+    {
+
+
+            ISO_Out = (int)getSLIDER()[1];
+
+
+
+
         return ISO_Out;
+
+
     }
 
     public static Integer getISOTGT()
@@ -732,7 +779,7 @@ public class lol
             case 3:
                 return new long[]{Shutter_AE/2, ISO_AE*2};
             case 4:
-                float ratio = SYS_ISO/50;
+                float ratio = SYS_ISO/(100/ASUSISODIV);
 
                 return new long[]{Math.round(Shutter_AE*ratio), 50};
             case 5:
@@ -742,27 +789,27 @@ public class lol
 
                 return new long[]{Math.round(Shutter_AE*ratio2), Math.round(ISO_AE*ratio3)};
             case 6:
-                return new long[]{Shutter_AE, 1600};
+                return new long[]{Shutter_AE, 1600/ASUSISODIV};
             case 7:
-                return new long[]{Shutter_AE, 3200};
+                return new long[]{Shutter_AE, 3200/ASUSISODIV};
             case 8:
-                return new long[]{Shutter_AE, 6400};
+                return new long[]{Shutter_AE, 6400/ASUSISODIV};
             case 9:
-                return new long[]{Shutter_AE, 9600};
+                return new long[]{Shutter_AE, 9600/ASUSISODIV};
             case 10:
-                return new long[]{Shutter_AE, 12800};
+                return new long[]{Shutter_AE, 12800/ASUSISODIV};
             case 11:
-                return new long[]{Shutter_AE, 25600};
+                return new long[]{Shutter_AE, 25600/ASUSISODIV};
             case 12:
-                return new long[]{Shutter_AE, 32000};
+                return new long[]{Shutter_AE, 32000/ASUSISODIV};
             case 13:
-                return new long[]{Shutter_AE, 51200};
+                return new long[]{Shutter_AE, 51200/ASUSISODIV};
             case 14:
-                return new long[]{Shutter_AE, 64000};
+                return new long[]{Shutter_AE, 64000/ASUSISODIV};
             case 15:
-                return new long[]{Shutter_AE, 85000};
+                return new long[]{Shutter_AE, 85000/ASUSISODIV};
             case 16:
-                return new long[]{Shutter_AE, 102400};
+                return new long[]{Shutter_AE, 102400/ASUSISODIV};
 
             case (1+16):
                 return new long[]{getShutter(1), getISO(1)};
@@ -935,7 +982,7 @@ public class lol
             case 85+16:
                 return new long[]{60*S_2_NS, getISO(1)};
             case 86+16:
-                return new long[]{60*S_2_NS, 51200};
+                return new long[]{60*S_2_NS, 51200/ASUSISODIV};
             default:
                 return new long[]{getShutter(8), getISO(1)};
         }
@@ -955,27 +1002,27 @@ public class lol
         switch (index)
         {
             case 1:
-                return 100;
+                return 100/ASUSISODIV;
             case 2:
-                return 200;
+                return 200/ASUSISODIV;
             case 3:
-                return 400;
+                return 400/ASUSISODIV;
             case 4:
-                return 800;
+                return 800/ASUSISODIV;
             case 5:
-                return 1600;
+                return 1600/ASUSISODIV;
             case 6:
-                return 3200;
+                return 3200/ASUSISODIV;
             case 7:
-                return 6400;
+                return 6400/ASUSISODIV;
             case 8:
-                return 12800;
+                return 12800/ASUSISODIV;
             case 9:
-                return 16000;
+                return 16000/ASUSISODIV;
             case 10:
-                return 25600;
+                return 25600/ASUSISODIV;
             default:
-                return 100;
+                return 100/ASUSISODIV;
         }
     }
 
