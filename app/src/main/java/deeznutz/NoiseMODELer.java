@@ -18,16 +18,16 @@ public class NoiseMODELer {
 
     public static float NR_Scale()
     {
-        Log.d("Deez Noise Modeler ISO",""+ISO()+ "Scale"+ computeNoiseModelS(ISO(),"IMX363_GOOGLE"));
+        Log.d("Deez Noise Modeler ISO",""+ISO()+ "Scale"+ computeNoiseModelS(ISO(),"IMX377_GOOGLE"));
 
 
-        return (float) computeNoiseModelS(ISO(),"IMX363_GOOGLE");
+        return (float) computeNoiseModelS(ISO(),"IMX377_GOOGLE");
     }
 
     public static float NR_Offset()
     {
-        Log.d("Deez Noise Modeler ISO",""+ISO()+ "Scale"+ computeNoiseModelO(ISO(),"IMX363_GOOGLE"));
-        return (float) computeNoiseModelO(ISO(),"IMX363_GOOGLE");
+        Log.d("Deez Noise Modeler ISO",""+ISO()+ "Scale"+ computeNoiseModelO(ISO(),"IMX377_GOOGLE"));
+        return (float) computeNoiseModelO(ISO(),"IMX377_GOOGLE");
     }
 
     public static float NR_Scale(String device)
@@ -95,9 +95,9 @@ public class NoiseMODELer {
                 return new double[]{0.0000025720647,0.000028855721,0.000000000039798506,0.000000046578279};
 
             case "IMX378_GOOGLE":
-                return new double[]{2.0,2.0,2.0,2.0};
-            case "IMX355_GOOGLE" :
-                return new double[]{2.0,2.0,2.0,2.0};
+                return new double[]{2.193985e-006,2.2338231e+021,1.630839e-011,1.961165e-006};
+            case "IMX377_GOOGLE" :
+                return new double[]{1.902395e-006,1.649218e-005,2.362977e-011,1.584547e-006};
             case "OV4668_GOOGLE" :
                 return new double[]{2.0,2.0,2.0,2.0};
             case "IMX179_GOOGLE" :

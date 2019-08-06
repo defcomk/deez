@@ -1,13 +1,24 @@
 package ZephrTech;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.Rect;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCaptureSession;
+import android.hardware.camera2.CameraDevice;
+import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
+import android.hardware.camera2.params.InputConfiguration;
 import android.hardware.camera2.params.LensShadingMap;
+import android.hardware.camera2.params.OutputConfiguration;
 import android.hardware.camera2.params.TonemapCurve;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.Surface;
 import android.view.View;
 
 import java.io.File;
@@ -15,10 +26,32 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import deeznutz.lol;
 
 public class DynUtil {
+    
+    static final int OPERATION_MODE_NORMAL = 0;
+
+    static final int OPERATION_MODE_HS = 0;
+
+    static final int OPERATION_BERYLLIUM_EIS = 0;
+
+    static final int OPERATION_CEPHEUS_QCFA = 0;
+
+    private static int YUVSIZEX = 4000;
+
+    private static int YUVSIZEY = 3000;
+
+    private static boolean RAW10 = false;
+
+
+
+    private static  int itr= 0;
 
     public static float frame_a_gain = 0;
     public static float frame_d_gain = 0;
@@ -50,6 +83,137 @@ public class DynUtil {
         return lol.getISOResult()*4;
     }
 
+    public static void setImageFormat(int width,int height,int imageFormat)
+    {
+
+        Log.d("Deez ImageReader","Index["+itr+"}"+" Width:"+width+" Height:"+height+" Format:"+imageFormat);
+        itr++;
+
+        if (imageFormat == 37 && width >5500)
+        {
+            RAW10 = true;
+            YUVSIZEX = width/2;
+            YUVSIZEY = height/2;
+        }
+        else {
+            RAW10 = false;
+            YUVSIZEX = width;
+            YUVSIZEY = height;
+        }
+
+    }
+
+
+    public static int getRawX(int x)
+    {
+        if(RAW10)
+        {
+            return YUVSIZEX;
+        }
+        else
+        {
+            return x;
+        }
+    }
+
+    public static int getRawY(int y)
+    {
+        if(RAW10)
+        {
+            return YUVSIZEY;
+        }
+        else
+        {
+            return y;
+        }
+    }
+
+
+
+    public static Rect Twelvy(Rect in)
+    {
+        Logger.LogRect(in);
+        if(in.bottom == 6000||in.top ==6000||in.right ==6000||in.left ==6000){
+            Logger.LogRect(new Rect(0,0,4000,3000));
+            return new Rect(0,0,4000,3000);
+        }
+        else
+        {
+            return in;
+        }
+
+
+    }
+
+
+
+    public static int Forty8Strip(int res)
+    {
+        if(res==8000)
+        {
+            return 4000;
+        }
+       else if(res==6000)
+        {
+            return 3000;
+        }
+        else
+        {
+            return res;
+        }
+    }
+
+    private void liukang()
+    {
+        getRawX(4032);
+
+        int a = Forty8Strip(3000);
+        Rect b = Twelvy(null);
+    }
+
+
+    @TargetApi(24)
+    public void CreateCaptureSession(List<Surface> outputs, CameraCaptureSession.StateCallback callback, Handler handler)
+            throws CameraAccessException{
+        List<OutputConfiguration> outputConfigurations = new ArrayList<>(outputs.size());
+        for (Surface surface: outputs)
+        {
+            outputConfigurations.add(new OutputConfiguration(surface));
+
+        }
+
+        //createCaptureSession_Xternal(CameraDevice.class,"CreateCaptureSessionInternal",outputConfigurations,callback,handler,OPERATION_MODE_NORMAL);
+    }
+
+    public static Object createCaptureSession_Xternal(Object obj, String methodName, Object... params){
+        int paramCount = params.length;
+        Method method;
+        Object requiredObj = null;
+        Class<?>[] classArray = new Class<?>[paramCount];
+        for(int i = 0; i < paramCount; i++)
+        {
+            classArray[i] = params[i].getClass();
+        }
+        try{
+            method = obj.getClass().getDeclaredMethod(methodName,classArray);
+            method.setAccessible(true);
+            requiredObj = method.invoke(obj,params);
+        }catch (NoSuchMethodException e)
+        {
+            e.printStackTrace();
+        }catch (IllegalArgumentException e)
+        {
+            e.printStackTrace();
+        }catch (IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }catch (InvocationTargetException e)
+        {
+            e.printStackTrace();
+        }
+
+        return requiredObj;
+    }
 
     public static Integer NUM()
     {
@@ -96,8 +260,16 @@ public class DynUtil {
 
     }
 
+    private static boolean isAux(int facing )
+    {
+        return (facing == 2 || facing == 3);
+
+    }
+
+
+
     public static float[] Linearization(float[] passthough) {
-        if(lol.getFACING() == 1)
+        if(lol.getFACING() == 0)
         {
             int i = 0;
             float[] Ye = Linearization_ov13855(passthough);
@@ -140,35 +312,35 @@ public class DynUtil {
         Log.d("Deez BL IMX","ISO]"+ISO());
         int X = 16;
         if (ISO() > 1 && ISO() <= 101) {
-            return new float[]{1008 / X, 1004 / X, 1004 / X, 1008 / X};
+            return new float[]{64,64,64,64};
         }
         else if(ISO() >101 && ISO() <= 201)
         {
-            return new float[]{1008/X,1004/X,1004/X,1008/X};
+            return new float[]{64,64,64,64};
         }
         else if(ISO() >201 && ISO() <= 401)
         {
-            return new float[]{1004/X,1000/X,1000/X,1004/X};
+            return new float[]{64,64,64,64};
         }
         else if(ISO() >401 && ISO() <= 801)
         {
-            return new float[]{998/X,990/X,990/X,998/X};
+            return new float[]{64,64,64,64};
         }
         else if(ISO() >801 && ISO() <= 1601)
         {
-            return new float[]{972/X,972/X,973/X,973/X};
+            return new float[]{64,64,64,64};
         }
         else if(ISO() >1601 && ISO() <= 3201)
         {
-            return new float[]{939/X,935/X,934/X,938/X};
+            return new float[]{64,64,64,64};
         }
         else if(ISO() >3201 && ISO() <= 6401)
         {
-            return new float[]{851/X,851/X,850/X,850/X};
+            return new float[]{64,64,64,64};
         }
         else if(ISO() >6401 && ISO() <= 13800)
         {
-            return new float[]{685/X,777/X,777/X,680/X};
+            return new float[]{65,65,65,65};
         }
         else
         {
@@ -180,7 +352,7 @@ public class DynUtil {
         Log.d("Deez BL OV","ISO]"+ISO());
         int X = 16;
         if (ISO() > 1 && ISO() <= 101) {
-            return new float[]{58,62,62,58};
+            return new float[]{64,64,64,64};
         }
         else if(ISO() >101 && ISO() <= 201)
         {
@@ -192,19 +364,19 @@ public class DynUtil {
         }
         else if(ISO() >401 && ISO() <= 801)
         {
-            return new float[]{60,64,64,60};
+            return new float[]{64,64,64,64};
         }
         else if(ISO() >801 && ISO() <= 1601)
         {
-            return new float[]{72,72,72,72};
+            return new float[]{63,63,63,63};
         }
         else if(ISO() >1601 && ISO() <= 3201)
         {
-            return new float[]{72,88,88,72};
+            return new float[]{63,63,63,63};
         }
         else if(ISO() >3201 && ISO() <= 12801)
         {
-            return new float[]{80,88,88,80};
+            return new float[]{62,63,63,62};
         }
         else
         {
