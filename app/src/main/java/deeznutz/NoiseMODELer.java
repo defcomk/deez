@@ -6,15 +6,90 @@ import android.util.Pair;
 public class NoiseMODELer {
 
     private static int NUM_COL_CHN = 4;
+    private static int isoMUL = 2;
     private static double Noise_Profile_S = 0.0;
     private static double Noise_Profile_0 = 0.0;
+
+    public static void setISOMUL(int isomul)
+    {
+        isoMUL = isomul;
+    }
 
     public static int ISO()
     {
         //return Math.round(frame_a_gain*frame_d_gain);
-        return lol.getISOResult()*2;
+        return lol.getISOResult()*isoMUL;
     }
 
+    public static float getScale(int V)
+    {
+        switch (V)
+        {
+            case 1:
+                return (float) computeNoiseModelS(ISO(),"IMX377_GOOGLE");
+
+            case 2:
+                return (float) computeNoiseModelS(ISO(),"IMX378_GOOGLE");
+
+            case 3:
+                return (float) computeNoiseModelS(ISO(),"IMX362_GOOGLE");
+
+            case 4:
+                return (float) computeNoiseModelS(ISO(),"IMX363_GOOGLE");
+
+            case 5:
+                return (float) computeNoiseModelS(ISO(),"IMX355_GOOGLE");
+
+            case 6:
+                return (float) computeNoiseModelS(ISO(),"OV5693_GOOGLE");
+
+            case 7:
+                return (float) computeNoiseModelS(ISO(),"IMX586_MEME");
+
+            case 8:
+                return (float) computeNoiseModelS(ISO(),"IMX586_OP");
+
+            default:
+                return (float) computeNoiseModelS(ISO(),"IMX377_GOOGLE");
+
+
+        }
+    }
+
+    public static float getOffset(int V)
+    {
+        switch (V)
+        {
+            case 1:
+                return (float) computeNoiseModelO(ISO(),"IMX377_GOOGLE");
+
+            case 2:
+                return (float) computeNoiseModelO(ISO(),"IMX378_GOOGLE");
+
+            case 3:
+                return (float) computeNoiseModelO(ISO(),"IMX362_GOOGLE");
+
+            case 4:
+                return (float) computeNoiseModelO(ISO(),"IMX363_GOOGLE");
+
+            case 5:
+                return (float) computeNoiseModelO(ISO(),"IMX351_GOOGLE");
+
+            case 6:
+                return (float) computeNoiseModelO(ISO(),"OV5693_GOOGLE");
+
+            case 7:
+                return (float) computeNoiseModelO(ISO(),"IMX586_MEME");
+
+            case 8:
+                return (float) computeNoiseModelO(ISO(),"IMX586_OP");
+
+            default:
+                return (float) computeNoiseModelO(ISO(),"IMX377_GOOGLE");
+
+
+        }
+    }
 
     public static float NR_Scale()
     {
@@ -100,10 +175,10 @@ public class NoiseMODELer {
                 return new double[]{1.902395e-006,1.649218e-005,2.362977e-011,1.584547e-006};
             case "OV4668_GOOGLE" :
                 return new double[]{2.0,2.0,2.0,2.0};
-            case "IMX179_GOOGLE" :
-                return new double[]{2.0,2.0,2.0,2.0};
-            case "OV5647_GOOGLE" :
-                return new double[]{2.0,2.0,2.0,2.0};
+            case "IMX355_GOOGLE" :
+                return new double[]{4.7371119e-006,1.4144828e-005,3.6762353e-011,1.7669711e-007};
+            case "OV5693_GOOGLE" :
+                return new double[]{3.73802e-006,3.651935e-004,4.499952e-007,-2.968624e-004};
             case "IMX363_MEME":
                 return new double[]{3.514601e-006,1.049551e-005,4.786872e-011,2.237714e-006};
             case "IMX345_SAM":
