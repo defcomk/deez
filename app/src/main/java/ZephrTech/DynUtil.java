@@ -80,7 +80,7 @@ public class DynUtil {
     private static int ISO()
     {
         //return Math.round(frame_a_gain*frame_d_gain);
-        return lol.getISOResult()*4;
+        return lol.getISOResult();
     }
 
     public static void setImageFormat(int width,int height,int imageFormat)
@@ -165,6 +165,8 @@ public class DynUtil {
 
     private void liukang()
     {
+        String ax = getModelForDCP(0,"d");
+
         getRawX(4032);
 
         int a = Forty8Strip(3000);
@@ -220,10 +222,23 @@ public class DynUtil {
         return 5;
     }
 
-
-    public static float[] CEPHEUS_CT1(float[]passaux)
+    public static String getModelForDCP(int ActiveCam,String SysModel)
     {
-        if(lol.getFACING() == 0) {
+        if(ActiveCam==0)
+        {
+            return SysModel+"IMX";
+        }
+        else
+        {
+             return SysModel+"OV";
+        }
+    }
+
+
+    public static float[] CEPHEUS_CT1(int ActiveCam,float[]passaux)
+    {
+        if(ActiveCam==0)
+        {
             return new float[]{1.109375f,-0.5234375f, -0.171875f, -0.96875f, 1.875f, 0.0390625f, 0.046875f, -0.171875f, 0.8984375f};
         }
         else {
@@ -232,9 +247,10 @@ public class DynUtil {
 
     }
 
-    public static float[] CEPHEUS_CT2(float[]passaux)
+    public static float[] CEPHEUS_CT2(int ActiveCam,float[]passaux)
     {
-        if(lol.getFACING() == 0) {
+        if(ActiveCam==0)
+        {
             return new float[]{1.4375f, -0.6796875f, -0.21875f, -0.96875f,1.875f, 0.0390625f, 0.0390625f, -0.140625f, 0.734375f};
         }
         else {
@@ -268,8 +284,8 @@ public class DynUtil {
 
 
 
-    public static float[] Linearization(float[] passthough) {
-        if(lol.getFACING() == 0)
+    public static float[] Linearization(int ActiveCam,float[] passthough) {
+        if(ActiveCam == 1)
         {
             int i = 0;
             float[] Ye = Linearization_ov13855(passthough);
@@ -308,39 +324,57 @@ public class DynUtil {
     }
 
     public static float[] Linearization_586(float[] passthough) {
+        if(BL_LOCKED)
+        {
+            return Linearization_586_48MP(passthough);
+        }
+        else {
+            return Linearization_586_12MP(passthough);
+        }
+    }
 
-        Log.d("Deez BL IMX","ISO]"+ISO());
-        int X = 16;
-        if (ISO() > 1 && ISO() <= 101) {
-            return new float[]{64,64,64,64};
+    public static float[] Linearization_586_12MP(float[] passthough) {
+
+        Log.d("Deez BL IMX12","ISO]"+ISO());
+
+        if (ISO() > 0 && ISO() <= 70) {
+            return new float[]{64.0625f, 64.0625f, 64f, 64f};
         }
-        else if(ISO() >101 && ISO() <= 201)
+        else if(ISO() >70 && ISO() <= 120)
         {
-            return new float[]{64,64,64,64};
+            return new float[]{64.0625f, 64.125f, 64.0625f, 64.0625f};
         }
-        else if(ISO() >201 && ISO() <= 401)
+        else if(ISO() >120 && ISO() <= 220)
         {
-            return new float[]{64,64,64,64};
+            return new float[]{64.125f, 64.125f, 64.0625f, 64.0625f};
         }
-        else if(ISO() >401 && ISO() <= 801)
+        else if(ISO() >220 && ISO() <= 420)
         {
-            return new float[]{64,64,64,64};
+            return new float[]{64.25f, 64.25f, 64.0625f, 64.0625f};
         }
-        else if(ISO() >801 && ISO() <= 1601)
+        else if(ISO() >420 && ISO() <= 820)
         {
-            return new float[]{64,64,64,64};
+            return new float[]{64.25f, 64.3125f, 64.3125f, 64.3125f};
         }
-        else if(ISO() >1601 && ISO() <= 3201)
+        else if(ISO() >820 && ISO() <= 1220)
         {
-            return new float[]{64,64,64,64};
+            return new float[]{64.4375f, 64.4375f, 64.5f, 64.5f };
         }
-        else if(ISO() >3201 && ISO() <= 6401)
+        else if(ISO() >1220 && ISO() <= 1620)
         {
-            return new float[]{64,64,64,64};
+            return new float[]{64.5625f, 64.625f, 64.6875f, 64.6875f};
         }
-        else if(ISO() >6401 && ISO() <= 13800)
+        else if(ISO() >1620 && ISO() <= 2220)
         {
-            return new float[]{65,65,65,65};
+            return new float[]{64.6875f, 64.75f, 64.9375f, 64.9375f};
+        }
+        else if(ISO() >2200 && ISO() <= 3170)
+        {
+            return new float[]{64.9375f, 65.3125f, 65.3125f, 65.3125f };
+        }
+        else if(ISO() >3170 && ISO() <= 25600)
+        {
+            return new float[]{65.5f, 65.5f, 65.9375f, 66f };
         }
         else
         {
@@ -348,36 +382,91 @@ public class DynUtil {
         }
     }
 
+
+    public static float[] Linearization_586_48MP(float[] passthough) {
+
+        Log.d("Deez BL IMX48","ISO]"+ISO());
+
+        if (ISO() > 0 && ISO() <= 70) {
+            return new float[]{64.25f, 64.25f, 64.25f,64.25f};
+        }
+        else if(ISO() >70 && ISO() <= 120)
+        {
+            return new float[]{64.25f, 64.1875f, 64.1875f, 64.25f};
+        }
+        else if(ISO() >120 && ISO() <= 220)
+        {
+            return new float[]{64.1875f, 64.125f, 64.125f, 64.1875f};
+        }
+        else if(ISO() >220 && ISO() <= 420)
+        {
+            return new float[]{64.0625f, 64f, 64f, 64.0625f};
+        }
+        else if(ISO() >420 && ISO() <= 820)
+        {
+            return new float[]{64.0625f, 63.9375f, 63.9375f, 64.0625f};
+        }
+        else if(ISO() >820 && ISO() <= 1220)
+        {
+            return new float[]{64f, 63.875f, 63.875f, 64f};
+        }
+        else if(ISO() >1220 && ISO() <= 1620)
+        {
+            return new float[]{64.0625f, 63.875f, 63.875f, 64.0625f};
+        }
+        else if(ISO() >1620 && ISO() <= 2220)
+        {
+            return new float[]{64.25f, 63.9375f,  63.875f, 64.25f};
+        }
+        else if(ISO() >2200 && ISO() <= 3170)
+        {
+            return new float[]{64.4375f, 64.875f, 64.8125f, 64.5625f };
+        }
+        else if(ISO() >3170 && ISO() <= 25600)
+        {
+            return new float[]{66.1875f, 68.5f, 68.4375f, 66.375f  };
+        }
+        else
+        {
+            return passthough;
+        }
+    }
     public static float[] Linearization_ov13855(float[] passthough) {
         Log.d("Deez BL OV","ISO]"+ISO());
-        int X = 16;
-        if (ISO() > 1 && ISO() <= 101) {
-            return new float[]{64,64,64,64};
+
+
+        if (ISO() > 0 && ISO() <= 70) {
+            return new float[]{64.1875f,64.1875f,64.1875f,64.1875f};
         }
-        else if(ISO() >101 && ISO() <= 201)
+        else if(ISO() >70 && ISO() <= 120)
         {
-            return new float[]{64,64,64,64};
+            return new float[]{64.1875f,64.1875f,64.25f,64.25f};
         }
-        else if(ISO() >201 && ISO() <= 401)
+        else if(ISO() >120 && ISO() <= 220)
         {
-            return new float[]{64,64,64,64};
+            return new float[]{64.25f,64.25f,64.3125f,64.3125f};
         }
-        else if(ISO() >401 && ISO() <= 801)
+        else if(ISO() >220 && ISO() <= 420)
         {
-            return new float[]{64,64,64,64};
+            return new float[]{64.25f,64.25f,64.375f,64.3125f};
         }
-        else if(ISO() >801 && ISO() <= 1601)
+        else if(ISO() >420 && ISO() <= 820)
         {
-            return new float[]{63,63,63,63};
+            return new float[]{62.5f,62.625f,62.6875f,62.5f};
         }
-        else if(ISO() >1601 && ISO() <= 3201)
+        else if(ISO() >820 && ISO() <= 900)
         {
-            return new float[]{63,63,63,63};
+            return new float[]{64.5f,65.5f,65.5f,64.5f};
         }
-        else if(ISO() >3201 && ISO() <= 12801)
+        else if(ISO() >900 && ISO() <= 1100)
         {
-            return new float[]{62,63,63,62};
+            return new float[]{64.3125f,64.4375f,64.375f,64.4375f};
         }
+        else if(ISO() >1100 && ISO() <= 6400)
+        {
+            return new float[]{65f,65.5f,65.5f,65};
+        }
+
         else
         {
             return passthough;
