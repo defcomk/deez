@@ -730,6 +730,40 @@ public class lol
 
     }
 
+    public static Long getDarkPreviewShutter()
+    {
+        boolean Binning = true;
+
+        if(Binning && (getSLIDER()[0] == (0.0333333333333333*S_2_NS))&&(int)getSLIDER()[1]>2500)
+        {
+            return 100000000L;
+        }
+        else if(Binning && (getSLIDER()[0] > 100000000L))
+        {
+            return 100000000L;
+        }else {
+            return getSLIDER()[0];
+        }
+
+
+    }
+
+    public static Integer getDarkPreviewISO()
+    {
+
+
+        ISO_Out = (int)getSLIDER()[1];
+
+        if(ISO_Out > 2500)
+            return 3200;
+        else {
+            return ISO_Out;
+        }
+
+
+
+    }
+
     public static Integer getISOTGTzF6()
     {
 
