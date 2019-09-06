@@ -10,7 +10,7 @@ public class NoiseMODELer {
     private static double Noise_Profile_S = 0.0;
     private static double Noise_Profile_0 = 0.0;
 
-    private static int MaxAnalog586ASUS = 200;
+    private static int MaxAnalog586ASUS = 1600;
     private static int MaxAnalog362 = 800;
     private static int MaxAnalog363 = 1600;
     private static int MaxAnalog586MEME = 6400;
@@ -22,10 +22,17 @@ public class NoiseMODELer {
         isoMUL = isomul;
     }
 
-    private static int ISO()
+    private static double ISO(int baseMul)
     {
         //return Math.round(frame_a_gain*frame_d_gain);
-        return lol.getISOResult();
+        return (lol.getISOResult()*2)/getSNR();
+    }
+
+    private static double getSNR()
+    {
+        int Frames = 15;
+
+        return Math.sqrt(Frames-3);
     }
 
     public static float getScale(int V,float sysScale)
@@ -37,30 +44,30 @@ public class NoiseMODELer {
             case 0:
                 return sysScale;
             case 1:
-                return (float) computeNoiseModelS(ISO(),"IMX377_GOOGLE");
+                return (float) computeNoiseModelS(ISO(2),"IMX377_GOOGLE");
 
             case 2:
-                return (float) computeNoiseModelS(ISO(),"IMX378_GOOGLE");
+                return (float) computeNoiseModelS(ISO(2),"IMX378_GOOGLE");
 
             case 3:
-                return (float) computeNoiseModelS(ISO(),"IMX362_GOOGLE");
+                return (float) computeNoiseModelS(ISO(2),"IMX362_GOOGLE");
 
             case 4:
-                return (float) computeNoiseModelS(ISO(),"IMX363_GOOGLE");
+                return (float) computeNoiseModelS(ISO(2),"IMX363_GOOGLE");
 
             case 5:
-                return (float) computeNoiseModelS(ISO(),"IMX355_GOOGLE");
+                return (float) computeNoiseModelS(ISO(2),"IMX355_GOOGLE");
 
             case 6:
-                return (float) computeNoiseModelS(ISO(),"OV5693_GOOGLE");
+                return (float) computeNoiseModelS(ISO(2),"OV5693_GOOGLE");
 
             case 7:
-                return (float) computeNoiseModelS(ISO(),"IMX586_MEME");
+                return (float) computeNoiseModelS(ISO(4),"IMX586_MEME");
 
             case 8:
-                return (float) computeNoiseModelS(ISO(),"IMX586_OP");
+                return (float) computeNoiseModelS(ISO(4),"IMX586_OP");
             case 9:
-                return (float) computeNoiseModelS(ISO(),"IMX586_CTS");
+                return (float) computeNoiseModelS(ISO(1),"IMX586_CTS");
             case 10:
                 return 0.0f;
 
@@ -79,30 +86,30 @@ public class NoiseMODELer {
             case 0:
                 return sysScale;
             case 1:
-                return (float) computeNoiseModelO(ISO(),"IMX377_GOOGLE");
+                return (float) computeNoiseModelO(ISO(2),"IMX377_GOOGLE");
 
             case 2:
-                return (float) computeNoiseModelO(ISO(),"IMX378_GOOGLE");
+                return (float) computeNoiseModelO(ISO(2),"IMX378_GOOGLE");
 
             case 3:
-                return (float) computeNoiseModelO(ISO(),"IMX362_GOOGLE");
+                return (float) computeNoiseModelO(ISO(2),"IMX362_GOOGLE");
 
             case 4:
-                return (float) computeNoiseModelO(ISO(),"IMX363_GOOGLE");
+                return (float) computeNoiseModelO(ISO(2),"IMX363_GOOGLE");
 
             case 5:
-                return (float) computeNoiseModelO(ISO(),"IMX351_GOOGLE");
+                return (float) computeNoiseModelO(ISO(2),"IMX351_GOOGLE");
 
             case 6:
-                return (float) computeNoiseModelO(ISO(),"OV5693_GOOGLE");
+                return (float) computeNoiseModelO(ISO(2),"OV5693_GOOGLE");
 
             case 7:
-                return (float) computeNoiseModelO(ISO(),"IMX586_MEME");
+                return (float) computeNoiseModelO(ISO(4),"IMX586_MEME");
 
             case 8:
-                return (float) computeNoiseModelO(ISO(),"IMX586_OP");
+                return (float) computeNoiseModelO(ISO(4),"IMX586_OP");
             case 9:
-                return (float) computeNoiseModelO(ISO(),"IMX586_CTS");
+                return (float) computeNoiseModelO(ISO(1),"IMX586_CTS");
             case 10:
                 return 0.0f;
 
@@ -115,26 +122,26 @@ public class NoiseMODELer {
 
     public static float NR_Scale()
     {
-        Log.d("Deez Noise Modeler ISO",""+ISO()+ "Scale"+ computeNoiseModelS(ISO(),"IMX377_GOOGLE"));
+        Log.d("Deez Noise Modeler ISO",""+ISO(2)+ "Scale"+ computeNoiseModelS(ISO(2),"IMX377_GOOGLE"));
 
 
-        return (float) computeNoiseModelS(ISO(),"IMX377_GOOGLE");
+        return (float) computeNoiseModelS(ISO(2),"IMX377_GOOGLE");
     }
 
     public static float NR_Offset()
     {
-        Log.d("Deez Noise Modeler ISO",""+ISO()+ "Scale"+ computeNoiseModelO(ISO(),"IMX377_GOOGLE"));
-        return (float) computeNoiseModelO(ISO(),"IMX377_GOOGLE");
+        Log.d("Deez Noise Modeler ISO",""+ISO(2)+ "Scale"+ computeNoiseModelO(ISO(2),"IMX377_GOOGLE"));
+        return (float) computeNoiseModelO(ISO(2),"IMX377_GOOGLE");
     }
 
     public static float NR_Scale(String device)
     {
-        return (float) computeNoiseModelS(ISO(),device);
+        return (float) computeNoiseModelS(ISO(2),device);
     }
 
     public static float NR_Offset(String device)
     {
-        return (float) computeNoiseModelO(ISO(),device);
+        return (float) computeNoiseModelO(ISO(2),device);
     }
 
     public static float NR_Scale(String device,int iso)
@@ -154,8 +161,8 @@ public class NoiseMODELer {
     public static void GenerateModel()
 
     {
-        Noise_Profile_S = computeNoiseModelS(ISO(),"Walleye");
-        Noise_Profile_0 = computeNoiseModelO(ISO(),"Walleye");
+        Noise_Profile_S = computeNoiseModelS(ISO(2),"Walleye");
+        Noise_Profile_0 = computeNoiseModelO(ISO(2),"Walleye");
 
         for(int i=0; i < 2*NUM_COL_CHN ; i +=2)
         {
@@ -170,12 +177,12 @@ public class NoiseMODELer {
     }*/
 
 
-    private static double computeNoiseModelS(int Sensitivity,String Device)
+    private static double computeNoiseModelS(double Sensitivity,String Device)
     {
         return  preComputedModels(Device)[0] * Sensitivity + preComputedModels(Device)[1];
 
     }
-    private static double computeNoiseModelO(int Sensitivity,String Device)
+    private static double computeNoiseModelO(double Sensitivity,String Device)
     {
 
         double dGain = Sensitivity/MaxAnalog586ASUS;
@@ -229,7 +236,7 @@ public class NoiseMODELer {
             case "IMX586_OP":
                 return new double[]{5.694684e-007,9.380359e-006,1.187943e-012,1.150711e-007};
             case "IMX586_CTS":
-                return new double[]{4.191043e-06,3.987194e-05,1.179649e-10,-6.472064e-06};
+                return new double[]{4.191043e-06,3.987194e-005,1.179649e-010,6.472064e-006};
 
             default:
                 return new double[]{0,0,0,0};
