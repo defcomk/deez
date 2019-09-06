@@ -171,6 +171,10 @@ public class DynUtil {
 
         int a = Forty8Strip(3000);
         Rect b = Twelvy(null);
+
+        int[] zz = IMX586_12_RANGE();
+
+        int bh = IMX586_12();
     }
 
 
@@ -435,36 +439,40 @@ public class DynUtil {
         Log.d("Deez BL OV","ISO]"+ISO());
 
 
-        if (ISO() > 0 && ISO() <= 70) {
-            return new float[]{64.1875f,64.1875f,64.1875f,64.1875f};
+        if (ISO() > 1 && ISO() <= 25) {
+            return new float[]{64.25f,64.25f,64,64.25f};
         }
-        else if(ISO() >70 && ISO() <= 120)
+        else if(ISO() >25 && ISO() <= 50)
         {
-            return new float[]{64.1875f,64.1875f,64.25f,64.25f};
+            return new float[]{64.25f,64.25f,64.25f,64.25f};
         }
-        else if(ISO() >120 && ISO() <= 220)
+        else if(ISO() >50 && ISO() <= 100)
         {
-            return new float[]{64.25f,64.25f,64.3125f,64.3125f};
+            return new float[]{64f,64.25f,64.25f,64.25f};
         }
-        else if(ISO() >220 && ISO() <= 420)
+        else if(ISO() >100 && ISO() <= 200)
         {
-            return new float[]{64.25f,64.25f,64.375f,64.3125f};
+            return new float[]{64.25f,64.25f,64.25f,64.25f};
         }
-        else if(ISO() >420 && ISO() <= 820)
+        else if(ISO() >200 && ISO() <= 400)
         {
-            return new float[]{62.5f,62.625f,62.6875f,62.5f};
+            return new float[]{63.75f,63.75f,63.75f,63.75f};
         }
-        else if(ISO() >820 && ISO() <= 900)
+        else if(ISO() >400 && ISO() <= 800)
         {
-            return new float[]{64.5f,65.5f,65.5f,64.5f};
+            return new float[]{63.75f,63.75f,63.75f,63.25f};
         }
-        else if(ISO() >900 && ISO() <= 1100)
+        else if(ISO() >800 && ISO() <= 1600)
         {
-            return new float[]{64.3125f,64.4375f,64.375f,64.4375f};
+            return new float[]{63,63.25f,63.25f,63.25f};
         }
-        else if(ISO() >1100 && ISO() <= 6400)
+        else if(ISO() >1600 && ISO() <= 4000)
         {
-            return new float[]{65f,65.5f,65.5f,65};
+            return new float[]{63.671875f,64.25f,64.234375f,64.25f};
+        }
+        else if(ISO() >4000 && ISO() <= 7000)
+        {
+            return new float[]{64.125f,64.28125f,64.265625f,64.171875f};
         }
 
         else
@@ -681,6 +689,27 @@ public class DynUtil {
         {
             return passthough;
         }
+    }
+
+    public static int[] IMX586_12_RANGE()
+    {
+        return new int[]{25,25600};
+    }
+
+    public static int IMX586_12()
+    {
+        return 6400;
+    }
+
+
+    public static void LogAFTrigger(Integer X)
+    {
+        Log.d("Deez AF","Trigger:"+X);
+    }
+
+    public static void LogAFState(Integer X)
+    {
+        Log.d("Deez AF","STATE:"+X);
     }
 
     public static float[] getPseudoBL(float[] passthough)
