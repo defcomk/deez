@@ -31,6 +31,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import ZephrTech.LSC.ZF6;
+import deeznutz.DeviceHelper;
 import deeznutz.lol;
 
 public class DynUtil {
@@ -165,6 +167,9 @@ public class DynUtil {
 
     private void liukang()
     {
+        String e = Spoofer.BRAND;
+
+        float[][][] vv = ZF6.getMAP();
         String ax = getModelForDCP(0,"d");
 
         getRawX(4032);

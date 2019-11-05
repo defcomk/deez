@@ -23,16 +23,78 @@ public class NoiseMODELer {
     }
 
     private static double ISO(int baseMul)
+
     {
+        if((int)lol.getSliderindex() == 11)
+        {
+            if(DeviceHelper.isAux())
+                return 25600*5;
+            else
+                return (25600/4)/getSNR();
+        }
+       else if((int)lol.getSliderindex() == 11)
+        {
+            if(DeviceHelper.isAux())
+                return 32000*5;
+            else
+                return (32000/4)/getSNR();
+        }
+        else if((int)lol.getSliderindex() == 11)
+        {
+            if(DeviceHelper.isAux())
+                return 51200*5;
+            else
+                return (51200/4)/getSNR();
+        }
+        else if((int)lol.getSliderindex() == 11)
+        {
+            if(DeviceHelper.isAux())
+                return 64000*5;
+            else
+                return (64000/4)/getSNR();
+        }
+        else if((int)lol.getSliderindex() == 11)
+        {
+            if(DeviceHelper.isAux())
+                return 84000*5;
+            else
+             return (84000/4)/getSNR();
+        }
+        else if((int)lol.getSliderindex() == 11)
+        {
+            if(DeviceHelper.isAux())
+                return 102400*5;
+            else
+                return (102400/4)/getSNR();
+        }
         //return Math.round(frame_a_gain*frame_d_gain);
-        return (lol.getISOResult()*2)/getSNR();
+      else   if((lol.getISOResult() < 51 )&& !DeviceHelper.isAux())
+        {
+
+                return (lol.getISOResult()/2)/getSNR();
+
+        }
+        else
+        {
+            return (lol.getISOResult()*baseMul)/getSNR();
+        }
+
     }
 
     private static double getSNR()
     {
         int Frames = 15;
 
-        return Math.sqrt(Frames-3);
+        if(lol.getISOResult() < 69)
+        {
+            return Math.sqrt(Frames);
+        }
+        else
+        {
+            return Math.sqrt(Frames-3);
+        }
+
+
     }
 
     public static float getScale(int V,float sysScale)
@@ -67,8 +129,21 @@ public class NoiseMODELer {
             case 8:
                 return (float) computeNoiseModelS(ISO(4),"IMX586_OP");
             case 9:
-                return (float) computeNoiseModelS(ISO(1),"IMX586_CTS");
+                if(DeviceHelper.isAux())
+                {
+                    return (float) computeNoiseModelS(ISO(5),"IMX586_CTS");
+                }
+               else if(lol.getISOResult() < 200)
+                {
+                    return (float) computeNoiseModelS(ISO(2),"IMX586_MEME");
+                }
+                else {
+                    return (float) computeNoiseModelS(ISO(2),"IMX586_CTS");
+                }
+
             case 10:
+                return (float) computeNoiseModelS(ISO(13),"OV13855");
+            case 11:
                 return 0.0f;
 
             default:
@@ -109,8 +184,20 @@ public class NoiseMODELer {
             case 8:
                 return (float) computeNoiseModelO(ISO(4),"IMX586_OP");
             case 9:
-                return (float) computeNoiseModelO(ISO(1),"IMX586_CTS");
+
+                if(DeviceHelper.isAux())
+                {
+                    return (float) computeNoiseModelO(ISO(5), "IMX586_CTS");
+                }
+                else if(lol.getISOResult() < 200) {
+                    return (float) computeNoiseModelO(ISO(2), "IMX586_MEME");
+                }
+                else {
+                    return (float) computeNoiseModelO(ISO(2), "IMX586_CTS");
+                }
             case 10:
+                return (float) computeNoiseModelO(ISO(13),"OV13855");
+            case 11:
                 return 0.0f;
 
             default:
@@ -184,8 +271,17 @@ public class NoiseMODELer {
     }
     private static double computeNoiseModelO(double Sensitivity,String Device)
     {
+        double dGain;
 
-        double dGain = Sensitivity/MaxAnalog586ASUS;
+        if(DeviceHelper.isAux())
+        {
+            dGain = Sensitivity/387;
+        }
+        else {
+            dGain = Sensitivity/MaxAnalog586ASUS;
+        }
+
+
 
         dGain = (dGain<1.0) ? 1.0:dGain;
 
@@ -237,6 +333,8 @@ public class NoiseMODELer {
                 return new double[]{5.694684e-007,9.380359e-006,1.187943e-012,1.150711e-007};
             case "IMX586_CTS":
                 return new double[]{4.191043e-06,3.987194e-005,1.179649e-010,6.472064e-006};
+            case "OV13855":
+                return new double[]{1.058569e-006,1.015944e-004,7.909431e-012,4.881217e-007};
 
             default:
                 return new double[]{0,0,0,0};
