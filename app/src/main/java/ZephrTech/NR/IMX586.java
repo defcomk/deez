@@ -1,6 +1,7 @@
 package ZephrTech.NR;
 
 import android.os.Build;
+import android.util.Log;
 
 import deeznutz.lol;
 
@@ -50,6 +51,18 @@ public class IMX586 {
         }
 
 
+    }
+
+    public static float getZenfone6Offset(int plane)
+    {
+        Log.d("NR Channel",plane+"");
+        return (float)compute_noise_model_entry_O_SUM(plane,lol.getISOResult());
+    }
+
+    public static float getZenfone6OScale(int plane)
+    {
+        Log.d("NR Channel",plane+"");
+        return (float)compute_noise_model_entry_S_SUM(plane,lol.getISOResult());
     }
 
     public static double getIMX586O(int plane)
@@ -120,18 +133,28 @@ public class IMX586 {
          double noise_model_B[] = { -7.076279837190812e-05,2.3470542535114918e-05,-1.1487331214779846e-05,1.022217394785556e-05 };
         double A = noise_model_A[plane];
         double B = noise_model_B[plane];
-        double s = A * sens + B;
-        return s < 0.0 ? 0.0 : s;
+        double aa=   A * sens + B;
+
+         Log.d("NR Scale" ,aa+"");
+
+         return aa;
+
     }
 
      static double compute_noise_model_entry_O_SUM(int plane, int sens) {
          double noise_model_C[] = { 9.148571218078536e-11,1.1415504692308749e-10,1.260897840504253e-10,6.235097116754794e-11 };
          double noise_model_D[] = { 1.8436305523840734e-06,3.325025798050419e-07,1.0819215029274746e-06,7.125675245506507e-07 };
-        double digital_gain = (sens / getDIGTALGain()) < 1.0 ? 1.0 : (sens / getDIGTALGain());
+        double digital_gain = ((sens / 200) < 1.0 )? 1.0 : (sens / 200);
         double C = noise_model_C[plane];
         double D = noise_model_D[plane];
-        double o = C * sens * sens + D * digital_gain * digital_gain;
-        return o < 0.0 ? 0.0 : o;
+        double a = C * sens * sens + D * digital_gain * digital_gain;
+
+        Log.d("NR Offset" ,a+"");
+
+        return a;
+
+
+
     }
 
 

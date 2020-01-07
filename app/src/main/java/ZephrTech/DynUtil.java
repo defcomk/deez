@@ -165,6 +165,21 @@ public class DynUtil {
         }
     }
 
+    public static float[] BoyBetterKnow(float[] in)
+    {
+        float strength = 30;
+
+        float[] xx = new float[9];
+
+        for (int x =0; x < 9; x++)
+        {
+            xx[x] = (((strength/100)*in[x])+in[x]) ;
+        }
+
+        return xx;
+
+    }
+
     private void liukang()
     {
         String e = Spoofer.BRAND;
